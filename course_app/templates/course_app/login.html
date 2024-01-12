@@ -1,0 +1,25 @@
+{% extends 'base.html'  %}
+{% load crispy_forms_tags %}
+
+
+{% block css_block %} {% endblock %}
+
+{% block title_block %} Signup {% endblock %}
+
+
+{% block body_block %}
+
+<div class="container">
+   <h1 class="display-2">Login Please</h1>
+   <div>
+      <form action="" method="POST">
+         {% csrf_token %}
+         {{form|crispy}}
+         <input type="submit" value="Login" class="btn btn-info btn-sm">
+      </form>
+   </div>
+</div>
+
+
+
+{% endblock %}

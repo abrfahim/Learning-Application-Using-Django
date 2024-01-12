@@ -1,0 +1,51 @@
+{% extends 'base.html'  %}
+{% load course_custom_tags %}
+{% load crispy_forms_tags %}
+
+
+{% block css_block %}
+<style>
+    .display-6{
+        font-size: 35px;
+        font-weight: 300;
+    }
+</style>
+
+{% endblock %}
+
+{% block title_block %} Signup {% endblock %}
+
+
+{% block body_block %}
+
+<div class="container">
+   <h1 class="display-6">My Course List</h1> <hr> <br>
+
+   <div class="row">
+    {% for uc in user_courses %}
+    <div class="col mx-auto">
+        <div class="card mx-auto" style="width: 18rem;">
+            <img src= "{{ uc.course.thumbnail.url }}" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{uc.course.name}}</h5>
+            </div>
+            
+            <div class="card-footer p-0">
+                <div class="row no-gutters">
+                    <div class="col border-right">
+                        <a href="#" class="btn btn-light btn-block">Start</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+</div>
+
+
+
+{% endblock %}

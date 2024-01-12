@@ -1,0 +1,2 @@
+from course_app.forms.registration_form import RegistrationForm
+from course_app.forms.login_form import LoginForm

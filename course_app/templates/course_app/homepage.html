@@ -1,0 +1,59 @@
+{% extends 'base.html'  %}
+{% load course_custom_tags %}
+
+{% block title_block %} Home Page {% endblock %}
+
+
+{% block body_block %}
+<!-- user-identity -->
+{{request.user}}
+<!-- user-identity -->
+
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        {% for course in courses %}
+        <div class="col mx-auto">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img src= "{{ course.thumbnail.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">{{course.name}}</h5>
+                <p class="card-text">{{course.description}}</p>
+                <p class="card-text"> Save {{course.discount}}% <br>
+                    <span>
+                        <del>{{course.price|bdt}}</del> &nbsp;
+                        <span> {% cal_sellprice course.price course.discount as value %} {{value|bdt}} </span>
+                    </span>
+                </p>
+                
+                </div>
+                
+                <div class="card-footer p-0">
+                    <div class="row no-gutters">
+                        {% if is_enrolled %}
+                        <div class="col border-right">
+                            <a href="#" class="btn btn-light btn-block">Start</a>
+                        </div>
+
+                        {% else %}
+
+                        <div class="col border-right">
+                            <a href="/check-out/{{course.slug}}" class="btn btn-light btn-block">Enroll Now</a>
+                        </div>
+                        <div class="col">
+                            <a href="{% url 'course_app:coursepage' slug=course.slug %}" class="btn btn-light btn-block">Show More</a>
+                        </div>
+
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'base.html'  %}
+{% load course_custom_tags %}
+{% load crispy_forms_tags %}
+
+
+{% block css_block %}
+<style>
+    .display-5{
+        font-size: 35px;
+    }
+</style>
+
+{% endblock %}
+
+{% block title_block %} Signup {% endblock %}
+
+
+{% block body_block %}
+<div class="container">
+    {% if order is not None %}
+    <h3 class="display-5 alert border text-center">Please Check and Continue Your Checkout</h3>
+    <hr>
+    {% endif %}
+    <div class="text-center">
+        <h3>You are going to enroll <a href="{% url 'course_app:coursepage' slug=course.slug %}">{{course.name}}</a> course.</h3> <hr>
+    </div>
+    <br>
+    
+
+    <div class="row">
+        <div class="col mx-auto ">
+            <div class="card mx-auto" style="width: 18rem;">
+                <img src= "{{ course.thumbnail.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">{{course.name}}</h5>
+                <p class="card-text">{{course.description}}</p>
+                <p class="card-text"> Save {{course.discount}}% <br>
+                    <span>
+                        <del>{{course.price|bdt}}</del> &nbsp;
+                        <span> {% cal_sellprice course.price course.discount as value %} {{value|bdt}} </span>
+                    </span>
+                </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col border rounded border-info">
+            <div>
+                <p class="display-5">{{course.name}}</p>
+                <hr>
+                {% if coupon %}
+                <div>
+                    <p class="alert alert-info">Coupon Code Applied Successfully!
+                        You have got {{coupon.discount}}% discount.
+                    </p>
+
+                </div>
+                <p class="display-5">Payable Ammount: <b>{% cal_sellprice course.price coupon.discount as value %} {{value|bdt}}</b></p> <br>
+                {% else %}
+                <p class="display-5">Payable Ammount: <b>{% cal_sellprice course.price course.discount as value %} {{value|bdt}}</b></p> <br>
+                {% endif %}
+                <a href="?action=create_payment" class="btn btn-info btn-lg"><b>Continue To Payment</b></a>
+            </div>
+            <br>
+            <div class="border mb-3 rounded border-info">
+                {%if coupon_code_message %}
+                <div class="alert alert-info">
+                    {{coupon_code_message}}
+                </div>
+                {% endif %}
+                <p class="col-lg-5">Apply Coupon Code!</p>
+                <form action="" method="GET">
+                    <div class="col-lg-5" class="form-group">
+                        <input type="text" class="form-control" name="couponcode">
+                    </div> <br>
+                    <div class="form-group col-lg-5"> 
+                        <input type="submit" value="Apply" class="btn btn-info btn-sm">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    
+    <br>
+
+</div>
+
+
+
+{% endblock %}
